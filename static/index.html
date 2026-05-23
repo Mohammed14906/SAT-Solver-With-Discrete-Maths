@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAT Solver Pro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>SAT Solver <span class="accent">Pro</span></h1>
+            <p>Boolean Satisfiability Problem Solver</p>
+        </header>
+
+        <main class="grid-layout">
+            <!-- Left Column: Input Panel -->
+            <div class="panel glass-panel input-panel">
+                <h2>Formula Input</h2>
+                
+                <div class="input-group">
+                    <label for="formula-input">Enter Propositional Formula</label>
+                    <textarea id="formula-input" placeholder="(P | Q) & (~P | R) & (~Q | ~R)"></textarea>
+                    <div class="help-text">
+                        Supports: &amp; | ~ ! ∧ ∨ ¬ → ↔
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <div class="toggle-group">
+                        <label class="toggle-label">Mode:</label>
+                        <div class="toggle-switch">
+                            <input type="radio" id="mode-first" name="solve-mode" value="first" checked>
+                            <label for="mode-first">First Solution</label>
+                            
+                            <input type="radio" id="mode-all" name="solve-mode" value="all">
+                            <label for="mode-all">All Solutions</label>
+                        </div>
+                    </div>
+                    
+                    <button id="solve-btn" class="primary-btn">Solve Formula</button>
+                </div>
+
+                <div class="divider"><span>OR</span></div>
+
+                <div class="dimacs-upload">
+                    <h3>DIMACS Upload</h3>
+                    <div class="upload-zone" id="upload-zone">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                        <p>Drag & Drop .cnf file here or click to browse</p>
+                        <input type="file" id="file-input" accept=".cnf,.txt" hidden>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Middle Column: Results & Truth Table -->
+            <div class="panel glass-panel results-panel">
+                <h2>Results</h2>
+                
+                <div id="status-container" class="status-container hidden">
+                    <div id="status-badge" class="badge"></div>
+                </div>
+
+                <div id="error-message" class="error-message hidden"></div>
+
+                <div id="results-content" class="hidden">
+                    <div class="section">
+                        <h3>Clauses (CNF)</h3>
+                        <div id="clauses-list" class="clauses-list"></div>
+                    </div>
+
+                    <div class="section">
+                        <h3>Solutions (<span id="solution-count">0</span>)</h3>
+                        <div id="solutions-list" class="solutions-list"></div>
+                    </div>
+
+                    <div class="section" id="truth-table-section">
+                        <h3>Truth Table</h3>
+                        <div class="table-container">
+                            <table id="truth-table">
+                                <thead><tr id="tt-header"></tr></thead>
+                                <tbody id="tt-body"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="empty-state" class="empty-state">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                    <p>Enter a formula to see results</p>
+                </div>
+            </div>
+
+            <!-- Right Column: DPLL Trace -->
+            <div class="panel glass-panel trace-panel">
+                <h2>DPLL Trace</h2>
+                <div class="trace-legend">
+                    <span class="legend-item"><span class="dot decide"></span> Decide</span>
+                    <span class="legend-item"><span class="dot propagate"></span> Propagate</span>
+                    <span class="legend-item"><span class="dot pure"></span> Pure</span>
+                    <span class="legend-item"><span class="dot backtrack"></span> Backtrack</span>
+                    <span class="legend-item"><span class="dot conflict"></span> Conflict</span>
+                </div>
+                <div id="trace-container" class="trace-container">
+                    <div class="empty-trace">Awaiting execution...</div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
