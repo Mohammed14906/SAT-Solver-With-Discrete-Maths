@@ -1,4 +1,4 @@
-# SAT Solver Pro
+# SAT Solver
 
 A Boolean Satisfiability (SAT) problem solver built with Python and a modern web UI.
 
